@@ -1,2 +1,67 @@
-<h1>Admin::Reviews#show</h1>
-<p>Find me in app/views/admin/reviews/show.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-8 offset-md-1'>
+  		<h2>レビュー詳細</h2>
+  		<table class='table table-hover table-inverse'>
+        <thead>
+          <tr>
+            <th>ユーザー名</th>
+            <th>rate</th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th>カテゴリー</th>
+            <th>コメント数</th>
+          <th colspan="4"></th>
+          </tr>
+        </thead>
+        <tbody>
+  		  <tr>
+          <td><%= link_to(@user) do %>
+            <%= @user.name %>
+            <% end %>
+          </td>
+          <td class="review-rating" data-score="<%= @review.rate %>"></td>
+          <td><%= @review.title %></td>
+          <td><%= @review.body %></td>
+          <td><%= @review.category %></td>
+          <td><%= @review.comments.count %></td>
+
+          <td><%= link_to 'Edit', edit_admin_review_path(@review), class: "btn btn-sm btn-success" %></td>
+          <td><%= link_to 'Destroy', admin_review_path(@review), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="book-comments-index">
+        <table>
+          <tbody>
+          <% @review.comments.each do |comment| %>
+          <tr>
+            <td>
+              <%= link_to admin_user_path(comment.user) do %>
+              <%= comment.user.name %>
+              <% end %>
+            </td>
+            <td><%= comment.comment %></td>
+            <td>
+               <%= link_to "Destroy", admin_review_comment_path(@review, comment), method: :delete, class: "btn btn-danger pull-right", remote: true %>
+            </td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+        <script>
+          $('.review-rating').raty({
+            readOnly: true,
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            starHalf: "<%= asset_path('star-half.png') %>",
+            score: function() {
+              return $(this).attr('data-score')
+          }
+            });
+        </script>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <div class='col-md-3'>
+<h2>プロフィール</h2>
+      <%= render 'public/users/profile', user: current_user %>
+    </div>
+    <div class='col-md-8 offset-md-1'>
+<h1>検索結果</h1>
+<table class='table table-hover table-inverse'>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Opinion</th>
+      <th>カテゴリー</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= link_to review.title,review %></td>
+        <td><%= review.body %></td>
+        <td><%= link_to review.category, search_review_path(keyword: review.category) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+    </div>
+  </div>
+</div>

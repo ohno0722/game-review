@@ -1,2 +1,46 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<div class="container">
+<h5><%= @user.name %> の会員情報編集</h5>
+    <div class="row justify-content-center">
+    <div class="col-md-8">
+        <%= form_with model: @user, url:admin_user_path, method: :patch, local: true do |f| %>
+            <div class="form-group">
+                <%= f.label :id, "会員ID　　　　　" %>
+            </div>
+            <div class="form-group">
+                <%= f.label :name, "ユーザー名　　" %>
+                <%= f.text_field :name, placeholder:"ユーザー名" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :age, "年齢　　　　　  " %>
+                <%= f.text_field :age, placeholder:"年齢" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :gender, "性別　　　　　" %>
+              <%= f.label :man  %>
+              <%= f.radio_button :gender, :man %>
+              <%= f.label :woman  %>
+              <%= f.radio_button :gender, :woman %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :email, "メールアドレス" %>
+                <%= f.text_field :email, placeholder:"" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :is_deleted, "会員ステータス" %>
+                <%= f.radio_button :is_deleted, false %>
+                <%= f.label :is_deleted, "有効" %>
+                <%= f.radio_button :is_deleted, true %>
+                <%= f.label :is_deleted, "退会" %>
+            </div>
+
+           <div class="form-group">
+            <%= f.submit"変更を保存", class: 'btn btn-outline-primary mx-5' %>
+          </div>
+            <% end %>
+    </div>
+    </div>
+</div>

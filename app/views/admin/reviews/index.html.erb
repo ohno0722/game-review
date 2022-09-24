@@ -1,2 +1,45 @@
-<h1>Admin::Reviews#index</h1>
-<p>Find me in app/views/admin/reviews/index.html.erb</p>
+<div class='container'>
+  <h1>レビュー一覧</h1>
+  <div class='row'>
+
+    <div class='col-md-8 '>
+    <table class='table table-hover table-inverse'>
+      <thead>
+        <tr>
+        <th>rate</th>
+        <th>Title</th>
+        <th>Opinion</th>
+        <th>カテゴリー</th>
+        <th>コメント数</th>
+        <th colspan="4"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @reviews.each do |review| %>
+      <tr>
+        <td class="review-rating" data-score="<%= review.rate %>"></td>
+        <td><%= link_to admin_review_path(review.id), class: "text-blue" do %>
+            <%= review.title %>
+            <% end %>
+        </td>
+        <td><%= review.body %></td>
+        <td><%= review.category %></td>
+        <td><%= review.comments.count %></td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <script>
+       $('.review-rating').raty({
+        readOnly: true,
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        score: function() {
+          return $(this).attr('data-score')
+        }
+      });
+    </script>
+    </div>
+  </div>
+</div>

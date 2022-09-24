@@ -1,2 +1,60 @@
-<h1>Public::Reviews#show</h1>
-<p>Find me in app/views/public/reviews/show.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <h2>プロフィール</h2>
+      <%= render 'public/users/profile', user: @user %>
+
+    </div>
+    <div class='col-md-8 offset-md-1'>
+  		<h2>レビュー詳細</h2>
+  		<table class='table table-hover table-inverse'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>rate</th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th>カテゴリー</th>
+            <th>コメント数</th>
+          <th colspan="4"></th>
+          </tr>
+        </thead>
+        <tbody>
+  		  <tr>
+          <td><%= link_to(@user) do %>
+            <%= @user.name %>
+            <% end %>
+          </td>
+          <td class="review-rating" data-score="<%= @review.rate %>"></td>
+          <td><%= @review.title %></td>
+          <td><%= @review.body %></td>
+          <td><%= @review.category %></td>
+          <td><%= @review.comments.count %></td>
+
+          <% if @user == current_user %>
+            <td><%= link_to 'Edit', edit_review_path(@review), class: "btn btn-sm btn-success" %></td>
+            <td><%= link_to 'Destroy', @review, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
+          <% end %>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="book-comments-index">
+        <%= render "public/comments/index", review: @review %>
+      </div>
+        <%= render "public/comments/form", review: @review, comment: @comment %>
+
+      <script>
+        $('.review-rating').raty({
+          readOnly: true,
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          score: function() {
+            return $(this).attr('data-score')
+        }
+          });
+      </script>
+    </div>
+  </div>
+</div>

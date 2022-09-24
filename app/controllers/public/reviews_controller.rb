@@ -6,7 +6,7 @@ class Public::ReviewsController < ApplicationController
   def create
     @review = Review.new(review_params)
     @review.user_id = current_user.id
-    if @review.save
+    if @review.save!
       redirect_to reviews_path, notice: "You have created review successfully."
     else
       @reviews = Review.all
@@ -16,11 +16,19 @@ class Public::ReviewsController < ApplicationController
 
   def index
     @reviews = Review.all
+
+  end
+
+  def search_review
+     @review=Review.new
+     @reviews = Review.search(params[:keyword])
   end
 
   def show
     @review = Review.find(params[:id])
+    @user = User.find_by(id: @review.user_id)
     @comment = Comment.new
+    @comments = @review.comments
   end
 
   def edit
@@ -30,7 +38,7 @@ class Public::ReviewsController < ApplicationController
   def update
     @review = Review.find(params[:id])
     if @review.update(review_params)
-      redirect_to review_path(@book), notice: "You have updated review successfully."
+      redirect_to review_path(@review), notice: "You have updated review successfully."
     else
       render "edit"
     end
@@ -45,7 +53,7 @@ class Public::ReviewsController < ApplicationController
    private
 
   def review_params
-    params.require(:review).permit(:title, :body)
+    params.require(:review).permit(:title, :body, :category, :rate)
   end
 
 end

@@ -1,2 +1,28 @@
-<h1>Public::Users#edit</h1>
-<p>Find me in app/views/public/users/edit.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+    <h2>プロフィール編集</h2>
+    <%= form_with model: @user, local:true do |f| %>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+     <div class="form-group">
+        <%= f.label :age %>
+        <%= f.text_field :age %>
+      </div>
+      <div class="form-group">
+        <%= f.label :gender %><br />
+        <%= f.label :man  %>
+        <%= f.radio_button :gender, :man %>
+        <%= f.label :woman  %>
+        <%= f.radio_button :gender, :woman %>
+      </div>
+      <div class="form-group">
+        <%= f.submit"編集内容を保存", class: 'btn btn-secondary' %>
+
+        <%= link_to"退会する",users_unsubscribe_path, class: 'btn btn-outline-danger' %>
+      </div>
+    <% end %>
+  </div>
+</div>

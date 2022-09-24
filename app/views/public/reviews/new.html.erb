@@ -3,7 +3,13 @@
   <div class="row justify-content-center">
     <div class="col-sm-8">
       <div class>
-<%= form_with model: @review,local:true do |f| %>
+        <%= form_with model: @review,local:true do |f| %>
+
+          <div id="rating-form">
+            <label>評価：</label>
+            <%= f.hidden_field :rate, :value => 'score' %>
+          </div>
+  
   <div class="form-group">
     <%= f.label :title, "タイトル", class: "col-sm-3 col-form-label" %>
     <%= f.text_field :title, class: 'form-control title' %>
@@ -13,9 +19,22 @@
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
   <div class="form-group">
-    <%= f.submit "新規登録", class: "btn btn-outline-success btn-wrapper" %>
+    <%= f.label :category, "カテゴリー", class: "col-sm-3 col-form-label" %>
+    <%= f.text_field :category, class: 'form-control book_body' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "新規投稿", class: "btn btn-outline-success btn-wrapper" %>
   </div>
 <% end %>
+  
+  <script>
+    $('#rating-form').raty({
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        scoreName: 'review[rate]'
+    });
+</script>
+
       </div>
     </div>
   </div>

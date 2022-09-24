@@ -1,0 +1,22 @@
+<table>
+    <tbody>
+      <% review.comments.each do |comment| %>
+      <tr>
+
+    <td>
+    <%= link_to user_path(comment.user) do %>
+    <%= comment.user.name %>
+    <% end %>
+    </td>
+
+    <td><%= comment.comment %></td>
+    <td>
+    <% if comment.user == current_user %>
+      <%= link_to "Destroy", review_comment_path(review, comment), method: :delete, class: "btn btn-danger pull-right", remote: true %>
+    <% end %>
+    </td>
+
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
