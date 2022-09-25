@@ -15,8 +15,15 @@ class Public::ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = Review.all
-
+    if params[:search] == nil
+      @reviews= Review.all
+    elsif params[:search] == ''
+      @reviews= Review.all
+    else
+      @reviews = Review.where("body LIKE ? ",'%' + params[:search] + '%')
+      .or(Review.where("title LIKE ? ",'%' + params[:search] + '%'))
+      .or(Review.where("category LIKE ? ",'%' + params[:search] + '%'))
+    end
   end
 
   def search_review
